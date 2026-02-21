@@ -15,7 +15,9 @@ class Program
         //Employee Registration
         //Employee shift (Dynamic shift)
         //Employee Time-in
-        //Employee Time-out (Compute Overtime)
+        
+
+        //Employee Overtime (Compute Overtime)
         //Include late policies 
 
 
