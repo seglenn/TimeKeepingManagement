@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="../TimeKeepingManagement_app_service/TimeKeepingManagement_app_service.csproj" Id="13aeb681-79ce-4d7d-b5ed-ff7cc712b2b6" />
+  <Project Path="../TimeKeepingManagement_data_service/TimeKeepingManagement_data_service.csproj" Id="5f1cf555-6f6a-4697-b37d-5a7816332b57" />
+  <Project Path="../TimeKeepingManagement_models/TimeKeepingManagement_models.csproj" Id="032a1d09-d432-44c2-b572-c56c593e0d59" />
   <Project Path="TimeKeepingManagement.csproj" />
 </Solution>

@@ -7,4 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TimeKeepingManagement_app_service\TimeKeepingManagement_app_service.csproj" />
+    <ProjectReference Include="..\TimeKeepingManagement_data_service\TimeKeepingManagement_data_service.csproj" />
+    <ProjectReference Include="..\TimeKeepingManagement_models\TimeKeepingManagement_models.csproj" />
+  </ItemGroup>
+
 </Project>
