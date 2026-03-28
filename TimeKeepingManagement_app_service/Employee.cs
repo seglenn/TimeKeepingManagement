@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TimeKeepingManagement_models
+namespace TimeKeepingManagement_app_service
 {
-    public class Class1
+    internal class Employee
     {
-        
-
-
     }
 }
