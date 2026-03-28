@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="TimeKeepingManagement.Console/TimeKeepingManagement.Console.csproj" />
+  <Project Path="../TimeKeepingManagementGlenn/TimeKeepingManagement.csproj" Id="a3431dc4-2e11-407e-9f0c-3ca8a761175a" />
   <Project Path="TimeKeepingManagement_app_service/TimeKeepingManagement_app_service.csproj" />
   <Project Path="TimeKeepingManagement_data_service/TimeKeepingManagement_data_service.csproj" />
   <Project Path="TimeKeepingManagement_models/TimeKeepingManagement_models.csproj" />
