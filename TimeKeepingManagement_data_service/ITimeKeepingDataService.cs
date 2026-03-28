@@ -8,7 +8,6 @@ namespace TimeKeepingManagement_data_service
         List<string> GetEmployeeNames();
         List<string> GetEmployeeIds();
         List<string> GetEmployeeShifts();
-
         void AddEmployee(string name, string id, string shift);
         void UpdateEmployeeShift(int index, string newShift);
         int FindEmployeeIndex(string employeeId);
@@ -17,7 +16,6 @@ namespace TimeKeepingManagement_data_service
         List<DateTime> GetTimeInRecords();
         List<DateTime> GetTimeOutRecords();
         List<string> GetAttendanceIds();
-
         void AddAttendance(string employeeId, DateTime timeIn, DateTime timeOut);
         int GetAttendanceCount();
     }

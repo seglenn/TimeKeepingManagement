@@ -7,8 +7,6 @@ namespace TimeKeepingManagement
 {
     internal class Program
     {
-        static TimeKeepingService _service = new TimeKeepingService(new TimeKeepingInMemoryData());
-
         static void Main(string[] args)
         {
             Console.WriteLine("=================================");

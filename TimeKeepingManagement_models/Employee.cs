@@ -6,4 +6,6 @@ namespace TimeKeepingManagement_models
 		public string EmployeeId { get; set; }
 		public string Shift { get; set; }
 	}
+
+
 }
