@@ -13,40 +13,7 @@ namespace TimeKeepingManagement_data_service
         public TimeDBData()
         {
             sqlConnection = new SqlConnection(connectionString);
-            CreateTablesIfNotExist();
             AddSeeds();
-        }
-
-        private void CreateTablesIfNotExist()
-        {
-            sqlConnection.Open();
-
-            string createEmployeesTable = @"
-                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Employees' AND xtype='U')
-                CREATE TABLE Employees (
-                    Id INT IDENTITY(1,1) PRIMARY KEY,
-                    EmployeeId NVARCHAR(50) NOT NULL UNIQUE,
-                    Name NVARCHAR(100) NOT NULL,
-                    Shift NVARCHAR(20) NOT NULL
-                )";
-
-            string createAttendanceTable = @"
-                IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Attendance' AND xtype='U')
-                CREATE TABLE Attendance (
-                    Id INT IDENTITY(1,1) PRIMARY KEY,
-                    EmployeeId NVARCHAR(50) NOT NULL,
-                    TimeIn DATETIME NOT NULL,
-                    TimeOut DATETIME NOT NULL,
-                    FOREIGN KEY (EmployeeId) REFERENCES Employees(EmployeeId)
-                )";
-
-            using (var cmd = new SqlCommand(createEmployeesTable, sqlConnection))
-                cmd.ExecuteNonQuery();
-
-            using (var cmd = new SqlCommand(createAttendanceTable, sqlConnection))
-                cmd.ExecuteNonQuery();
-
-            sqlConnection.Close();
         }
 
         private void AddSeeds()
@@ -64,34 +31,14 @@ namespace TimeKeepingManagement_data_service
             }
         }
 
-        public List<string> GetEmployeeNames()
-        {
-            string selectStatement = "SELECT Name FROM Employees";
-            SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
-
-            sqlConnection.Open();
-            SqlDataReader reader = selectCommand.ExecuteReader();
-
-            var names = new List<string>();
-
-            while (reader.Read())
-            {
-                names.Add(reader["Name"].ToString());
-            }
-
-            sqlConnection.Close();
-            return names;
-        }
-
         public List<string> GetEmployeeIds()
         {
+            var ids = new List<string>();
             string selectStatement = "SELECT EmployeeId FROM Employees";
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
 
             sqlConnection.Open();
             SqlDataReader reader = selectCommand.ExecuteReader();
-
-            var ids = new List<string>();
 
             while (reader.Read())
             {
@@ -100,25 +47,6 @@ namespace TimeKeepingManagement_data_service
 
             sqlConnection.Close();
             return ids;
-        }
-
-        public List<string> GetEmployeeShifts()
-        {
-            string selectStatement = "SELECT Shift FROM Employees";
-            SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
-
-            sqlConnection.Open();
-            SqlDataReader reader = selectCommand.ExecuteReader();
-
-            var shifts = new List<string>();
-
-            while (reader.Read())
-            {
-                shifts.Add(reader["Shift"].ToString());
-            }
-
-            sqlConnection.Close();
-            return shifts;
         }
 
         public void AddEmployee(string name, string id, string shift)
@@ -134,6 +62,42 @@ namespace TimeKeepingManagement_data_service
             sqlConnection.Open();
             insertCommand.ExecuteNonQuery();
             sqlConnection.Close();
+        }
+
+        public List<string> GetEmployeeNames()
+        {
+            var names = new List<string>();
+            string selectStatement = "SELECT Name FROM Employees";
+            SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
+
+            sqlConnection.Open();
+            SqlDataReader reader = selectCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                names.Add(reader["Name"].ToString());
+            }
+
+            sqlConnection.Close();
+            return names;
+        }
+
+        public List<string> GetEmployeeShifts()
+        {
+            var shifts = new List<string>();
+            string selectStatement = "SELECT Shift FROM Employees";
+            SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
+
+            sqlConnection.Open();
+            SqlDataReader reader = selectCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                shifts.Add(reader["Shift"].ToString());
+            }
+
+            sqlConnection.Close();
+            return shifts;
         }
 
         public void UpdateEmployeeShift(int index, string newShift)
@@ -182,13 +146,12 @@ namespace TimeKeepingManagement_data_service
 
         public List<DateTime> GetTimeInRecords()
         {
-            string selectStatement = "SELECT TimeIn FROM Attendance ORDER BY Id";
+            var times = new List<DateTime>();
+            string selectStatement = "SELECT TimeIn FROM Attendance";
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
 
             sqlConnection.Open();
             SqlDataReader reader = selectCommand.ExecuteReader();
-
-            var times = new List<DateTime>();
 
             while (reader.Read())
             {
@@ -201,13 +164,12 @@ namespace TimeKeepingManagement_data_service
 
         public List<DateTime> GetTimeOutRecords()
         {
-            string selectStatement = "SELECT TimeOut FROM Attendance ORDER BY Id";
+            var times = new List<DateTime>();
+            string selectStatement = "SELECT TimeOut FROM Attendance";
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
 
             sqlConnection.Open();
             SqlDataReader reader = selectCommand.ExecuteReader();
-
-            var times = new List<DateTime>();
 
             while (reader.Read())
             {
@@ -220,13 +182,12 @@ namespace TimeKeepingManagement_data_service
 
         public List<string> GetAttendanceIds()
         {
-            string selectStatement = "SELECT EmployeeId FROM Attendance ORDER BY Id";
+            var ids = new List<string>();
+            string selectStatement = "SELECT EmployeeId FROM Attendance";
             SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
 
             sqlConnection.Open();
             SqlDataReader reader = selectCommand.ExecuteReader();
-
-            var ids = new List<string>();
 
             while (reader.Read())
             {
