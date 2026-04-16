@@ -67,7 +67,6 @@ namespace TimeKeepingManagement_data_service
             }
         }
 
-        // Employee methods
         public List<string> GetEmployeeNames()
         {
             return employees.Select(e => e.Name).ToList();
@@ -118,7 +117,6 @@ namespace TimeKeepingManagement_data_service
             return employees.Count;
         }
 
-        // Attendance methods
         public List<DateTime> GetTimeInRecords()
         {
             return attendances.Select(a => a.TimeIn).ToList();

@@ -18,5 +18,6 @@ namespace TimeKeepingManagement_data_service
         List<string> GetAttendanceIds();
         void AddAttendance(string employeeId, DateTime timeIn, DateTime timeOut);
         int GetAttendanceCount();
+
     }
 }

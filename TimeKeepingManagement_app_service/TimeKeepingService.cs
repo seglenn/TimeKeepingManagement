@@ -32,23 +32,25 @@ namespace TimeKeepingManagement_app_service
         public bool ValidateTimeShift(DateTime timeIn, DateTime timeOut, string shift)
         {
 
-            if (timeOut <= timeIn)
-            {
-                return false;
-            }
-
             TimeSpan morningStart = new TimeSpan(9, 0, 0); // 9:00 AM
             TimeSpan morningEnd = new TimeSpan(17, 0, 0); // 5:00 PM
             TimeSpan nightStart = new TimeSpan(23, 0, 0); // 11:00 PM
             TimeSpan nightEnd = new TimeSpan(7, 0, 0);  // 7:00 AM
 
+            
             if (shift == "morning")
             {
+                if (timeOut <= timeIn)
+                {
+                    return false;
+                }
+
                 if (timeIn.TimeOfDay < morningStart || timeOut.TimeOfDay > morningEnd)
                 {
                     return false;
                 }
             }
+
             else if (shift == "night")
             {
 

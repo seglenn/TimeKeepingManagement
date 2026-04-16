@@ -76,7 +76,7 @@ namespace TimeKeepingManagement
         static bool ShowOptions()
         {
             Console.Write("\nDo you want to continue? (Y/N): ");
-            string userInput = Console.ReadLine();
+            string userInput = Console.ReadLine().Trim();
 
             switch (userInput.ToLower())
             {
@@ -192,7 +192,7 @@ namespace TimeKeepingManagement
                 }
                 else
                 {
-                    Console.WriteLine("\nTime out cannot be earlier than time in. Please enter valid times.");
+                    Console.WriteLine("\nPlease enter valid times. Refer to the shift schedule.");
                 }
             }
             else
@@ -259,15 +259,15 @@ namespace TimeKeepingManagement
 
             if (success)
             {
-                Console.WriteLine($"Shift updated successfully to {newShift} shift.");
+                Console.WriteLine($"\nShift updated successfully to {newShift} shift.");
             }
             else if (_service.GetEmployeeShift(employeeId) == newShift)
             {
-                Console.WriteLine($"You are already assigned to the {newShift} shift.");
+                Console.WriteLine($"\nYou are already assigned to the {newShift} shift.");
             }
             else
             {
-                Console.WriteLine("Invalid shift selection. Please enter 'Morning' or 'Night'.");
+                Console.WriteLine("\nInvalid shift selection. Please enter 'Morning' or 'Night'.");
             }
         }
 
@@ -301,14 +301,20 @@ namespace TimeKeepingManagement
 
             if (records.Count == 0)
             {
-                Console.WriteLine("No attendance records found.");
+                Console.WriteLine("\nNo attendance records found.");
             }
-            else
+
+            string currentId = " ";
+
+            for (int i = 0; i < records.Count; i++)
             {
-                foreach (var record in records)
+                if (records[i].EmployeeId != currentId)
                 {
-                    Console.WriteLine($"Employee ID: {record.EmployeeId}, Name: {record.EmployeeName}, Time In: {record.TimeIn:hh:mm tt}, Time Out: {record.TimeOut:hh:mm tt}");
+                    currentId = records[i].EmployeeId;
+                    Console.WriteLine($"\nName: {records[i].EmployeeName}, ({records[i].EmployeeId})");                    
                 }
+                
+                Console.WriteLine($"    Time In: {records[i].TimeIn:hh:mm tt}, Time Out: {records[i].TimeOut:hh:mm tt}");      
             }
 
             Console.WriteLine("\nLATE RECORDS:");
@@ -318,16 +324,22 @@ namespace TimeKeepingManagement
 
             if (lateRecords.Count == 0)
             {
-                Console.WriteLine("No late records found.");
-            }
-            else
-            {
-                foreach (var record in lateRecords)
-                {
-                    Console.WriteLine($"Employee ID: {record.EmployeeId}, Name: {record.EmployeeName}, Shift: {record.Shift}, Time In: {record.TimeIn:hh:mm tt} - LATE");
-                }
+                Console.WriteLine("\nNo late records found.");
             }
 
+            string currentIdLate = " ";
+
+            for(int i = 0; i < lateRecords.Count; i++)
+            {
+                if (lateRecords[i].EmployeeId != currentIdLate)
+                {
+                    currentIdLate = lateRecords[i].EmployeeId;
+                    Console.WriteLine($"\nName: {lateRecords[i].EmployeeName}, ({lateRecords[i].EmployeeId})");
+                }
+                
+                Console.WriteLine($"    Time In: {lateRecords[i].TimeIn:hh:mm tt} - LATE");
+            }
+           
         }
     }
 
