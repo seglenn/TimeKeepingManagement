@@ -1,3 +1,5 @@
+using System;
+
 namespace TimeKeepingManagement_models
 {
 	public class Employee

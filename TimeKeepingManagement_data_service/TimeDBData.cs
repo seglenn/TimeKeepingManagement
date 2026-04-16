@@ -24,7 +24,7 @@ namespace TimeKeepingManagement_data_service
             {
                 AddEmployee("Glenn", "001", "morning");
                 AddEmployee("Lambert", "002", "night");
-                AddEmployee("Cordial", "003", "morning");
+                
 
                 AddAttendance("001", DateTime.Now.AddHours(-8), DateTime.Now);
                 AddAttendance("002", DateTime.Now.AddHours(-7), DateTime.Now);
