@@ -1,0 +1,20 @@
+{
+  "Employees": [
+    {
+      "Name": "glenn",
+      "EmployeeId": "111",
+      "Shift": "night"
+    },
+    {
+      "Name": "ggg",
+      "EmployeeId": "222",
+      "Shift": "morning"
+    },
+    {
+      "Name": "Shekel",
+      "EmployeeId": "0901",
+      "Shift": "morning"
+    }
+  ],
+  "Attendances": []
+}

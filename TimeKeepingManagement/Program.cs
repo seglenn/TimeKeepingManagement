@@ -187,6 +187,7 @@ namespace TimeKeepingManagement
                     Console.WriteLine($"\nTime in: {employeeTimeIn:hh:mm tt}");
                     Console.WriteLine($"Time Out: {employeeTimeOut:hh:mm tt}");
                     Console.WriteLine($"Total work duration: {duration}");
+
                     Console.WriteLine("\n[== Time in recorded successfully. ==]");
                 }
                 else
@@ -238,7 +239,7 @@ namespace TimeKeepingManagement
 
             if (employeeIndex == -1)
             {
-                Console.WriteLine("Employee ID not found. Please register first.");
+                Console.WriteLine("\nEmployee ID not found. Please register first.");
                 return;
             }
 
@@ -249,10 +250,10 @@ namespace TimeKeepingManagement
             Console.WriteLine("--------------------------------");
             Console.WriteLine("Morning Shift: 9:00 AM - 5:00 PM");
             Console.WriteLine("Night Shift: 11:00 PM - 7:00 AM");
-            Console.WriteLine("--------------------------------\n");
+            Console.WriteLine("--------------------------------");
 
-            Console.Write("Enter your new shift (Morning/Night): ");
-            string newShift = Console.ReadLine().ToLower();
+            Console.Write("\nEnter your new shift (Morning/Night): ");
+            string newShift = Console.ReadLine().Trim().ToLower();
 
             bool success = _service.UpdateEmployeeShift(employeeId, newShift);
 
@@ -283,7 +284,7 @@ namespace TimeKeepingManagement
 
             if (employeeIds.Count == 0)
             {
-                Console.WriteLine("No registered employees found.");
+                Console.WriteLine("\nNo registered employees found.");
             }
             else
             {
@@ -309,6 +310,24 @@ namespace TimeKeepingManagement
                     Console.WriteLine($"Employee ID: {record.EmployeeId}, Name: {record.EmployeeName}, Time In: {record.TimeIn:hh:mm tt}, Time Out: {record.TimeOut:hh:mm tt}");
                 }
             }
+
+            Console.WriteLine("\nLATE RECORDS:");
+            Console.WriteLine("-----------------");
+
+            var lateRecords = _service.GetLateRecords();
+
+            if (lateRecords.Count == 0)
+            {
+                Console.WriteLine("No late records found.");
+            }
+            else
+            {
+                foreach (var record in lateRecords)
+                {
+                    Console.WriteLine($"Employee ID: {record.EmployeeId}, Name: {record.EmployeeName}, Shift: {record.Shift}, Time In: {record.TimeIn:hh:mm tt} - LATE");
+                }
+            }
+
         }
     }
 
