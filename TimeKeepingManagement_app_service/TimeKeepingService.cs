@@ -31,66 +31,36 @@ namespace TimeKeepingManagement_app_service
 
         public bool ValidateTimeShift(DateTime timeIn, DateTime timeOut, string shift)
         {
-            TimeSpan morningStart = new TimeSpan(9, 0, 0);   // 9:00 AM
-            TimeSpan morningEnd = new TimeSpan(17, 0, 0);    // 5:00 PM
-            TimeSpan nightStart = new TimeSpan(23, 0, 0);    // 11:00 PM
-            TimeSpan nightEnd = new TimeSpan(7, 0, 0);       // 7:00 AM
+            string trimShift = shift.Trim().ToLower();
 
-            if (shift == "morning")
+            if (trimShift == "night")
             {
-                // Allow time-in from 9:00 AM up to (but not at) 5:00 PM
-                if (timeIn.TimeOfDay < morningStart || timeIn.TimeOfDay >= morningEnd)
-                {
-                    return false;
-                }
-
-                // Time-out must not exceed 5:00 PM
-                if (timeOut.TimeOfDay > morningEnd)
-                {
-                    return false;
-                }
-
-                // Time-out must be after time-in
                 if (timeOut <= timeIn)
                 {
-                    return false;
+                    timeOut = timeOut.AddDays(1);
                 }
-            }
-            else if (shift == "night")
-            {
-                bool validTimeIn = timeIn.TimeOfDay >= nightStart || timeIn.TimeOfDay < nightEnd;
 
-                bool validTimeOut = timeOut.TimeOfDay <= nightEnd || timeOut.TimeOfDay >= nightStart;
-
-                if (!validTimeIn)
+                if (timeOut > timeIn)
                 {
-                    return false;
+                    return true;
                 }
-
-                if (!validTimeOut)
-                {
-                    return false;
-                }
-
-                DateTime adjustedTimeOut = timeOut;
-                if (timeIn.TimeOfDay >= nightStart && timeOut.TimeOfDay <= nightEnd)
-                {
-                    adjustedTimeOut = timeOut.AddDays(1);
-                }
-
-                if (adjustedTimeOut <= timeIn)
+                else
                 {
                     return false;
                 }
             }
             else
             {
-                return false; 
+                if (timeOut > timeIn)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-
-            return true;
         }
-        
 
         public string WorkDuration(DateTime timeIn, DateTime timeOut)
         {

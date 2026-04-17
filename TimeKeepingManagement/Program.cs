@@ -171,9 +171,9 @@ namespace TimeKeepingManagement
             Console.WriteLine("--------------------------------");
 
             Console.Write("\nTIME IN (Format: 9:00 AM or 17:45): ");
-            string timeIn = Console.ReadLine();
+            string timeIn = Console.ReadLine().Trim();
             Console.Write("TIME OUT (Format: 5:00 PM or 17:00): ");
-            string timeOut = Console.ReadLine();     
+            string timeOut = Console.ReadLine().Trim();
 
             if (DateTime.TryParse(timeIn, out DateTime employeeTimeIn) && DateTime.TryParse(timeOut, out DateTime employeeTimeOut))
             {           
@@ -188,7 +188,7 @@ namespace TimeKeepingManagement
                     Console.WriteLine($"Time Out: {employeeTimeOut:hh:mm tt}");
                     Console.WriteLine($"Total work duration: {duration}");
 
-                    Console.WriteLine("\n[== Time in recorded successfully. ==]");
+                    Console.WriteLine("\n[== Time in and time out recorded successfully. ==]");
                 }
                 else
                 {
@@ -327,7 +327,7 @@ namespace TimeKeepingManagement
             }
             
             Console.WriteLine("\nLATE RECORDS:");
-            Console.WriteLine("-----------------");
+            Console.WriteLine("---------------");
 
             var lateRecords = _service.GetLateRecords();
 
