@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using TimeKeepingManagement_app_service;
-using TimeKeepingManagement_data_service;
+using TimeKeepingManagement_models;
 
 namespace TimeKeepingManagement
 {
-    internal class Program
+    class Program
     {
+        static TimeKeepingService _service = new TimeKeepingService();
+
         static void Main(string[] args)
         {
             Console.WriteLine("=================================");
@@ -198,13 +200,7 @@ namespace TimeKeepingManagement
 
         static void LateRecords()
         {
-            Console.WriteLine("\n=== LATE RECORDS: === \n");
-
-            if (!_service.HasAttendanceRecords())
-            {
-                Console.WriteLine("No attendance records found.");
-                return;
-            }
+            Console.WriteLine("\n=== LATE RECORDS: === \n");      
 
             var lateRecords = _service.GetLateRecords();
 
@@ -304,6 +300,30 @@ namespace TimeKeepingManagement
                     Console.WriteLine($"Employee ID: {record.EmployeeId}, Name: {record.EmployeeName}, Time In: {record.TimeIn:hh:mm tt}, Time Out: {record.TimeOut:hh:mm tt}");
                 }
             }
+
+            Console.WriteLine("\nLATE RECORDS:");
+            Console.WriteLine("-----------------");
+
+            var lateRecords = _service.GetLateRecords();
+
+            if (lateRecords.Count == 0)
+            {
+                Console.WriteLine("\nNo late records found.");
+            }
+
+            string currentIdLate = " ";
+
+            for (int i = 0; i < lateRecords.Count; i++)
+            {
+                if (lateRecords[i].EmployeeId != currentIdLate)
+                {
+                    currentIdLate = lateRecords[i].EmployeeId;
+                    Console.WriteLine($"\nName: {lateRecords[i].EmployeeName}, ({lateRecords[i].EmployeeId})");
+                }
+
+                Console.WriteLine($"    Time In: {lateRecords[i].TimeIn:hh:mm tt} - LATE");
+            }
+
         }
     }
 }

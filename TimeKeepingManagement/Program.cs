@@ -206,12 +206,6 @@ namespace TimeKeepingManagement
         {
             Console.WriteLine("\n=== LATE RECORDS: === \n");
 
-            if (!_service.HasAttendanceRecords())
-            {
-                Console.WriteLine("No attendance records found.");
-                return;
-            }
-
             var lateRecords = _service.GetLateRecords();
 
             if (lateRecords.Count == 0)
@@ -221,11 +215,22 @@ namespace TimeKeepingManagement
             }
 
             Console.WriteLine("Late Records:");
-            foreach (var record in lateRecords)
+            Console.WriteLine("-------------");
+
+            string currentId = "";
+
+            for (int i = 0; i < lateRecords.Count; i++)
             {
-                Console.WriteLine($"Employee ID: {record.EmployeeId}, Name: {record.EmployeeName}, Shift: {record.Shift}, Time In: {record.TimeIn.ToShortTimeString()} - LATE");
+                if (lateRecords[i].EmployeeId != currentId)
+                {
+                    currentId = lateRecords[i].EmployeeId;
+                    Console.WriteLine($"\nName: {lateRecords[i].EmployeeName}, ({lateRecords[i].EmployeeId})");
+                }
+
+                Console.WriteLine($"    Time In: {lateRecords[i].TimeIn:hh:mm tt} - LATE");
             }
-            Console.WriteLine($"Total late records: {lateRecords.Count}");
+
+            Console.WriteLine($"\nTotal late records: {lateRecords.Count}");
         }
 
         static void ShiftSched()
@@ -304,19 +309,23 @@ namespace TimeKeepingManagement
                 Console.WriteLine("\nNo attendance records found.");
             }
 
-            string currentId = " ";
-
-            for (int i = 0; i < records.Count; i++)
+            else
             {
-                if (records[i].EmployeeId != currentId)
-                {
-                    currentId = records[i].EmployeeId;
-                    Console.WriteLine($"\nName: {records[i].EmployeeName}, ({records[i].EmployeeId})");                    
-                }
-                
-                Console.WriteLine($"    Time In: {records[i].TimeIn:hh:mm tt}, Time Out: {records[i].TimeOut:hh:mm tt}");      
-            }
+                string currentId = " ";
 
+                for (int i = 0; i < records.Count; i++)
+                {
+                    if (records[i].EmployeeId != currentId)
+                    {
+                        currentId = records[i].EmployeeId;
+                        Console.WriteLine($"\nName: {records[i].EmployeeName}, ({records[i].EmployeeId})");
+                    }
+
+                    Console.WriteLine($"    Time In: {records[i].TimeIn:hh:mm tt}, Time Out: {records[i].TimeOut:hh:mm tt}");
+                }
+
+            }
+            
             Console.WriteLine("\nLATE RECORDS:");
             Console.WriteLine("-----------------");
 
@@ -326,19 +335,24 @@ namespace TimeKeepingManagement
             {
                 Console.WriteLine("\nNo late records found.");
             }
-
-            string currentIdLate = " ";
-
-            for(int i = 0; i < lateRecords.Count; i++)
+            else
             {
-                if (lateRecords[i].EmployeeId != currentIdLate)
+                string currentIdLate = " ";
+
+                for (int i = 0; i < lateRecords.Count; i++)
                 {
-                    currentIdLate = lateRecords[i].EmployeeId;
-                    Console.WriteLine($"\nName: {lateRecords[i].EmployeeName}, ({lateRecords[i].EmployeeId})");
+                    if (lateRecords[i].EmployeeId != currentIdLate)
+                    {
+                        currentIdLate = lateRecords[i].EmployeeId;
+                        Console.WriteLine($"\nName: {lateRecords[i].EmployeeName}, ({lateRecords[i].EmployeeId})");
+                    }
+
+                    Console.WriteLine($"    Time In: {lateRecords[i].TimeIn:hh:mm tt} - LATE");
                 }
-                
-                Console.WriteLine($"    Time In: {lateRecords[i].TimeIn:hh:mm tt} - LATE");
+
             }
+
+            
            
         }
     }
